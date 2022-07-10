@@ -225,7 +225,7 @@ function M.debug_test()
   debug_test(testname)
 end
 
-local function run(value)
+local function run_with_args(value)
       local dap = helpers.load_module("dap")
       dap.run({
           type = "go",
@@ -237,7 +237,7 @@ local function run(value)
 end
 
 function M.debug_with_args()
-  local input = view:new({ on_submit = run })
+  local input = view:new({ on_submit = run_with_args })
 
   input:mount()
 end

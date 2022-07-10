@@ -9,12 +9,14 @@ An extension for [nvim-dap][1] providing configurations for launching go debugge
 - Configuration to attach nvim-dap and Delve into a running process and start a debug session.
 - Configuration to start a debug session in the main function.
 - Configuration to run tests in a debug session.
+- Interface for run debug using commandline arguments
 
 ## Pre-reqs
 
 - Neovim >= 0.5
 - [nvim-dap][1]
 - [delve][2] >= 1.7.0
+- [nui][7]
 
 This plugin extension make usage of treesitter to find the nearest test to debug.
 Make sure you have the Go treesitter parser installed. 
@@ -55,6 +57,19 @@ It is better to define a mapping to invoke this command. See the mapping section
 nmap <silent> <leader>td :lua require('dap-go').debug_test()<CR>
 ```
 
+### Debugging using args
+
+To debug the closest method above the cursor use you can run:
+- `:lua require('dap-go').debug_with_args()` 
+
+It is better to define a mapping to invoke this command. See the mapping section bellow.
+
+## Mappings
+
+```vimL
+nmap <silent> <leader>td :lua require('dap-go').debug_with_args()<CR>
+```
+
 ## Acknowledgement
 
 Thanks to the [nvim-dap-python][6] for the inspiration.
@@ -65,3 +80,4 @@ Thanks to the [nvim-dap-python][6] for the inspiration.
 [4]: https://github.com/junegunn/vim-plug
 [5]: https://github.com/wbthomason/packer.nvim
 [6]: https://github.com/mfussenegger/nvim-dap-python
+[7]: https://github.com/MunifTanjim/nui.nvim
