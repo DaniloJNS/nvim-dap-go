@@ -1,4 +1,6 @@
 local query = require "vim.treesitter.query"
+local helpers = require('helpers')
+local view = require('ui.view.args')
 
 local M = {}
 
@@ -22,12 +24,6 @@ local subtests_query = [[
     (func_literal))
   (#eq? @run "Run")) @parent
 ]]
-
-local function load_module(module_name)
-  local ok, module = pcall(require, module_name)
-  assert(ok, string.format('dap-go dependency error: %s not installed', module_name))
-  return module
-end
 
 local function setup_go_adapter(dap)
   dap.adapters.go = function(callback, config)
@@ -106,13 +102,13 @@ local function setup_go_configuration(dap)
 end
 
 function M.setup()
-  local dap = load_module("dap")
+  local dap = helpers.load_module("dap")
   setup_go_adapter(dap)
   setup_go_configuration(dap)
 end
 
 local function debug_test(testname)
-  local dap = load_module("dap")
+  local dap = helpers.load_module("dap")
   dap.run({
       type = "go",
       name = testname,
@@ -227,6 +223,23 @@ function M.debug_test()
   local msg = string.format("starting debug session '%s'...", testname)
   print(msg)
   debug_test(testname)
+end
+
+local function run(value)
+      local dap = helpers.load_module("dap")
+      dap.run({
+          type = "go",
+          name = "Debug",
+          request = "launch",
+          program = "${file}",
+          args = value,
+      })
+end
+
+function M.debug_with_args()
+  local input = view:new({ on_submit = run })
+
+  input:mount()
 end
 
 return M
