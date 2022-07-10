@@ -67,7 +67,7 @@ It is better to define a mapping to invoke this command. See the mapping section
 ## Mappings
 
 ```vimL
-nmap <silent> <leader>td :lua require('dap-go').debug_with_args()<CR>
+nmap <silent> <leader>da :lua require('dap-go').debug_with_args()<CR>
 ```
 
 ## Acknowledgement
